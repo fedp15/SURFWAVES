@@ -15,9 +15,6 @@ Route::bind('product',function($slug){
   return App\Producto::where('slug',$slug)->first();
 });
 
-Route::bind('categoria',function($categoria){
-  return App\Categoria::find($categoria);
-});
 
 Route::get('/',[
 'as' => 'home',
@@ -29,9 +26,6 @@ Route::get('product/{slug}',[
 'uses' =>'StoreController@show'
 ]);
 
-
-Route::resource('categoria','CategoriaController');
-Route::resource('store','StoreController');
 // carrito
 
 
@@ -60,76 +54,42 @@ Route::get('cart/update/{product}/cantidad',[
 'uses' =>'CartController@update'
 ]);
 
-
-
-Route::get('order-detail', [
-	//'middleware' => 'auth:user',
-	'as' => 'order-detail',
-	'uses' => 'CartController@orderDetail'
-]);
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-// admin.
-
-route::get('admin/home', function(){
-  return view('admin/home');
-
-});
-
-route::get('store/partials/about', function(){
-  return view('store/partials/about');
-});
-
-  route::get('store/partials/info', function(){
-    return view('store/partials/info');
-});
 
 
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/login', 'Auth\AuthController@getLogout');
 
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-///////////////////////////////////////////////////
-Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'admin'], function()
-{
+// autenticacion routes
 
-	Route::get('home', function(){
-		return view('admin.home');
-	});
+Route::get('auth/login',[
+  'as'=> 'login-get',
+  'uses'=>'Auth\AuthController@getLogin'
+]);
 
-	Route::resource('categoria', 'CategoriaController');
+Route::post('auth/login',[
+  'as'=> 'login-post',
+  'uses'=>'Auth\AuthController@postLogin'
+]);
 
-	Route::resource('producto', 'ProductController');
-
-
-
-
-
-
-
-});
-
-Route::resource('admin/usuario', 'UsuarioController');
-
-
-/////////////////////////////////////////////////
-
-
-
-/*Route::resource('admin/categoria', 'Admin\CategoriaController');
-Route::resource('admin/producto', 'Admin\ProductController');
-*/
-
-
-Route::get('auth/login', 'Auth\loginController@logout');
 
 Route::get('auth/logout',[
   'as'=> 'logout',
-  'uses'=>'Auth\LoginController@logout'
+  'uses'=>'Auth\AuthController@getLogout'
 ]);
 
-Route::get('order-detail',[
-  'middleware'=>'auth',
-  'as'=>'order-detail',
-  'uses'=>'CartController@orderDetail'
+Route::get('auth/register',[
+  'as'=> 'register-get',
+  'uses'=>'Auth\AuthController@getRegister'
 ]);
+
+Route::get('auth/register',[
+  'as'=> 'register-post',
+  'uses'=>'Auth\AuthController@postRegister'
+]);
+///////////////////Route::get('/home', 'HomeController@index')->name('home');

@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand main-title" href="{{'http://localhost:8000'}}">SURFWAVES™</a>
+      <a class="navbar-brand main-title" href="{{'http://localhost:8000'}}">SURFHHHHHHHWAVES™</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
